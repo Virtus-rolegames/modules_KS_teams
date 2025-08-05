@@ -55,7 +55,7 @@ def make_rooms(teams: List[List]):
     return rooms
 
 
-def get_rooms(data: List, shuffle: bool = False):
+def get_rooms(data: List, no_shuffle: bool = True):
     """
     Функция разбивающая по возможности список на группы по 4-5 элементов. Внутренняя логика немного запутанная,
     в следующих обновлениях перепишу.
@@ -65,16 +65,16 @@ def get_rooms(data: List, shuffle: bool = False):
             ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R']
 
         Результат:
-            [['A', 'B', 'C', 'D', 'E'], ['F', 'G', 'H', 'I', 'J'], ['M', 'N', 'K', 'L'], ['Q', 'R', 'O', 'P']]
-
-        Результат с shuffle=True:
             [['N', 'B', 'J', 'Q', 'F'], ['D', 'L', 'I', 'R', 'P'], ['A', 'G', 'H', 'K'], ['C', 'O', 'M', 'E']]
+
+        Результат с no_shuffle=True:
+            [['A', 'B', 'C', 'D', 'E'], ['F', 'G', 'H', 'I', 'J'], ['M', 'N', 'K', 'L'], ['Q', 'R', 'O', 'P']]
     :param data: Список чего угодно, что нужно распределить по комнатам/командам
-    :param shuffle: Опциональный параметр, если True, состав комнат будет случаен, если нет, то в порядке из people
+    :param no_shuffle: Опциональный параметр, если False, состав комнат будет случаен, если нет, то в порядке из people
     :return: Список списков, где вложенный список - это состав комнаты
     """
     people = copy.deepcopy(data)
-    if shuffle:
+    if not no_shuffle:
         random.shuffle(people)
     return make_rooms(make_teams(people))
 
@@ -98,8 +98,8 @@ def test():
         #print(teams)
         #print(rooms)
     print(data)
-    print(get_rooms(data=data, shuffle=False))
-    print(get_rooms(data=data, shuffle=True))
+    print(get_rooms(data=data, no_shuffle=False))
+    print(get_rooms(data=data, no_shuffle=True))
 
 
 if __name__ == "__main__":
